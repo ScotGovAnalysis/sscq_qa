@@ -33,6 +33,64 @@ prevyear1 <- haven::read_sas(config$prevyear1.path)
 # Path to file with cluster info 
 prevyear1.xref <- haven::read_sas(config$prevyear1.xref)
 
+# Path to previous SSCQ data
+#prevyear2 <- haven::read_sas(config$prevyear2.path)
+# Path to file with cluster info 
+#prevyear2.xref <- haven::read_sas(config$prevyear2.xref)
+
+
+# Path to previous SSCQ data
+#prevyear3 <- haven::read_sas(config$prevyear3.path)
+# Path to file with cluster info 
+#prevyear3.xref <- haven::read_sas(config$prevyear3.xref)
+
+
+# Path to SCJS data
+#prevyear3.scjs <- haven::read_sas(config$prevyear3.scjs,
+#                                 col_select = c(SERIAL,
+#                                               QDTRANS,
+#                                              QDTRANSTAT)) %>%
+#rename(oldref_scjs =  SERIAL,
+#      trans_status_scjs = QDTRANS)
+
+# path to shes trans data
+#prevyear3.shes <- read_csv(config$prevyear3.shes) %>%
+# select(CPSerialA, TRANS, TRANS2, TransY) %>%
+#rename(oldref_shes =  CPSerialA,
+#      trans_status_shes = TRANS) 
+
+# Path to SHS data
+#prevyear3.shs <- haven::read_sas(config$prevyear3.shs,
+#                                col_select = c(UNIQID,
+#                                              RANDTRANS))%>%
+#rename(oldref_shs =  UNIQID,
+#      trans_status_shs = RANDTRANS)
+
+
+
+# Path to SCJS data
+#prevyear2.scjs <- haven::read_sas(config$prevyear2.scjs,
+ #                                 col_select = c(SERIAL,
+  #                                               QDTRANS,
+   #                                              QDTRANSTAT)) %>%
+  #rename(oldref_scjs =  SERIAL,
+   #      trans_status_scjs = QDTRANS)
+
+# path to shes trans data
+#prevyear2.shes <- read_csv(config$prevyear2.shes) %>%
+ # select(CPSerialA, TRANS, TRANS2, TransY) %>%
+  #rename(oldref_shes =  CPSerialA,
+   #      trans_status_shes = TRANS) 
+
+# Path to SHS data
+#prevyear2.shs <- haven::read_sas(config$prevyear2.shs,
+ #                                col_select = c(UNIQID,
+  #                                              RANDTRANS))%>%
+  #rename(oldref_shs =  UNIQID,
+   #      trans_status_shs = RANDTRANS)
+
+
+
 
 # Path to SCJS data
 prevyear1.scjs <- haven::read_sas(config$prevyear1.scjs,
@@ -56,7 +114,7 @@ prevyear1.shs <- haven::read_sas(config$prevyear1.shs,
          trans_status_shs = RANDTRANS)
 
 
-# Path to SCJS 2023 data
+# Path to SCJS data
 sscq.scjs <- haven::read_sas(config$sscq.scjs,
                                col_select = c(Serial,
                                               QDTRANS)) %>%
@@ -69,7 +127,7 @@ sscq.shes <- read_csv(config$sscq.shes) %>%
   rename(oldref_shes =  CPSerialA,
          trans_status_shes = TRANS)
 
-# Path to SHS 2023 data
+# Path to SHS data
 sscq.shs <- haven::read_sas(config$sscq.shs,
                               col_select = c(UNIQID,
                                              RANDTRANS))%>%
@@ -89,8 +147,37 @@ prevyear1 <- prevyear1 %>%
   select(SSCQid, LA, pooled_ind_wt, pooled_ind_wt_sc, cluster, oldref) %>% 
   filter(pooled_ind_wt > 0) 
 
+#prevyear2 <- prevyear2 %>% 
+ # left_join(prevyear2.xref, by = "SSCQid") %>%
+  #select(SSCQid, LA, pooled_ind_wt, pooled_ind_wt_sc, cluster, oldref) %>% 
+  #filter(pooled_ind_wt > 0) 
+
+#prevyear3 <- prevyear3 %>% 
+# left_join(prevyear3.xref, by = "SSCQid") %>%
+#select(SSCQid, LA, pooled_ind_wt, pooled_ind_wt_sc, cluster, oldref) %>% 
+#filter(pooled_ind_wt > 0) 
 
 ### 3 - Data wrangling -------------------------------------------------------------------
+#allsurveyprev3 <- bind_rows(prevyear3.scjs, prevyear3.shes, prevyear3.shs) %>%
+# mutate(oldref = ifelse(is.na(oldref_scjs) == FALSE, oldref_scjs, 
+#                       ifelse(is.na(oldref_shes) == FALSE, oldref_shes, oldref_shs)),
+#      trans_status = ifelse(is.na(trans_status_scjs) == FALSE, trans_status_scjs, 
+#                           ifelse(is.na(trans_status_shes) == FALSE, trans_status_shes, trans_status_shs))) %>%
+#select(-c(starts_with("oldref_"), starts_with("trans_status_"))) %>%
+#mutate(trans_status = ifelse(trans_status < 0, -1, trans_status))
+
+
+
+#allsurveyprev2 <- bind_rows(prevyear2.scjs, prevyear2.shes, prevyear2.shs) %>%
+ # mutate(oldref = ifelse(is.na(oldref_scjs) == FALSE, oldref_scjs, 
+  #                       ifelse(is.na(oldref_shes) == FALSE, oldref_shes, oldref_shs)),
+   #      trans_status = ifelse(is.na(trans_status_scjs) == FALSE, trans_status_scjs, 
+    #                           ifelse(is.na(trans_status_shes) == FALSE, trans_status_shes, trans_status_shs))) %>%
+  #select(-c(starts_with("oldref_"), starts_with("trans_status_"))) %>%
+  #mutate(trans_status = ifelse(trans_status < 0, -1, trans_status))
+
+
+
 allsurveyprev1 <- bind_rows(prevyear1.scjs, prevyear1.shes, prevyear1.shs) %>%
   mutate(oldref = ifelse(is.na(oldref_scjs) == FALSE, oldref_scjs, 
                          ifelse(is.na(oldref_shes) == FALSE, oldref_shes, oldref_shs)),
@@ -129,6 +216,24 @@ prevyear1 <- prevyear1 %>%
                                           "Yes: Trans or has a trans history",
                                           NA)))
 
+#prevyear2 <- prevyear2 %>% 
+ # left_join(allsurveyprev2,
+  #          by = c("oldref")) %>%
+  #mutate(trans_status = ifelse(trans_status %in% c(-1, 3), 3, trans_status),
+   #      trans_status = factor(trans_status, levels = c(1:3),
+    #                           labels = c("No: Not trans and does not have a trans history",
+     #                                     "Yes: Trans or has a trans history",
+      #                                    NA)))
+
+
+#prevyear3 <- prevyear3 %>% 
+# left_join(allsurveyprev3,
+#          by = c("oldref")) %>%
+#mutate(trans_status = ifelse(trans_status %in% c(-1, 3), 3, trans_status),
+#      trans_status = factor(trans_status, levels = c(1:3),
+#                           labels = c("No: Not trans and does not have a trans history",
+#                                     "Yes: Trans or has a trans history",
+#                                    NA)))
 
 ### 5 - Survey proportions ----
 sscq_year <- calculate_svymean(
@@ -145,13 +250,30 @@ prev_year1 <- calculate_svymean(
   strata_col = "LA",
   weights_col = "pooled_ind_wt")
 
+#prev_year2 <- calculate_svymean(
+ # data = prevyear2,
+  #var_name = "trans_status",
+  #cluster_col = "cluster",
+  #strata_col = "LA",
+  #weights_col = "pooled_ind_wt")
+
+#prev_year3 <- calculate_svymean(
+# data = prevyear3,
+#var_name = "trans_status",
+#cluster_col = "cluster",
+#strata_col = "LA",
+#weights_col = "pooled_ind_wt")
 
 ### 6 - Combining datasets ----
 
-Trans <- bind_rows(sscq_year, prev_year1)
+Trans <- bind_rows(sscq_year, prev_year1#, prev_year2, prev_year3
+                   )
 
 Year <- c(config$sscqyear, config$sscqyear,
-          config$prevyear1, config$prevyear1)
+          config$prevyear1, config$prevyear1#,
+          #config$prevyear2, config$prevyear2,
+          #config$prevyear3, config$prevyear3
+          )
 
 Trans$Year <- Year
 

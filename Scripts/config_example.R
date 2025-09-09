@@ -87,17 +87,30 @@ config$sscq.scjs <- xxx
 
 config$prevyear1.scjs <- xxx
 
+#config$prevyear2.scjs <- xxx
+
+#config$prevyear3.scjs <- xxx
+
 
 # Path to SHeS trans data
 config$sscq.shes <- xxx
 
 config$prevyear1.shes <- xxx
 
+#config$prevyear2.shes <- xxx
+
+#config$prevyear3.shes <- xxx
+
 
 # Path to SHS trans data
 config$sscq.shs <- xxx
 
 config$prevyear1.shs <- xxx
+
+#config$prevyear2.shs <- xxx
+
+#config$prevyear3.shs <- xxx
+
 
 
 
